@@ -5,8 +5,8 @@ from evaluation import evaluate_functional_correctness
 import os
 
 
-ZEROSHOT_FILE = f'zeroshot.baseline.jsonl'
-SELF_REFINE_FILE = f'method_SelfEvolve.jsonl'
+ZEROSHOT_FILE = f'baseline_evals/zeroshot.baseline_top_p1.0.jsonl'
+SELF_REFINE_FILE = f'method_SelfEvolve_test.jsonl'
 def construct_completion(ansset_file: str = ZEROSHOT_FILE):
     id_completion_pairs = [{'task_id':output['task_id'], 'completion':output['output']} for output in stream_jsonl(ansset_file)]
     return id_completion_pairs
@@ -30,14 +30,14 @@ def args_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument("--problem_file", type=str, required=True, help="problem prompt")
     parser.add_argument("--output_file", type=str, required=True, help="jsonl file including the output")
-    _args = parser.parse_args(args=["--problem_file", HUMAN_EVAL, "--output_file", ZEROSHOT_FILE])
+    _args = parser.parse_args(args=["--problem_file", HUMAN_EVAL, "--output_file", SELF_REFINE_FILE])
     return _args
 
 if __name__ == '__main__':
     args = args_parse()
     answers = construct_completion(args.output_file)
 
-    temp_file = args.output_file.split('.')[0] + f'_temp.jsonl'
+    temp_file = args.output_file[args.output_file.find('/')+1:].rstrip('.jsonl') + f'_temp.jsonl'
     write_jsonl(temp_file, answers)
 
     entry_point(

@@ -2,7 +2,7 @@ from utils import *
 from baseline import write_jsonl, stream_jsonl, read_problems
 
 
-OUTPUTFILE = "method_SelfEvolve_test.jsonl"
+OUTPUTFILE = ""
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
 # following prompts templates are based on the method from this paper:https://arxiv.org/pdf/2306.02907
 FIRST_STEP={
@@ -89,13 +89,13 @@ def next_step_prompts(in_dict_list: list[dict], response: list[str | dict], step
 if __name__ == '__main__':
     service = LlamaModel(URL, API_KEY, 0.8, 1,0.8)
     inputs = get_input_list_se(HUMAN_EVAL)
-    prompts = get_prompt_list_init(inputs[0:10])
-    history = [{'task_id':item['task_id']} for item in inputs[0:10]]
+    prompts = get_prompt_list_init(inputs)
+    history = [{'task_id':item['task_id']} for item in inputs]
     concatenate_dict(history, inputs, ['input'], ['prompt'])
     concatenate_dict(history, prompts, ['sub_prompt_0'], ['prompt'])
     step = 0
     slow_print('first step start, ask for knowledge:')
-    history = get_batch(history, 2)
+    history = get_batch(history, 3)
     res = service.request_response([line[f'sub_prompt_{step}'] for line in history])
     slow_print('knowledge get, ask for solution:')
     step = next_step_prompts(history, res, step)

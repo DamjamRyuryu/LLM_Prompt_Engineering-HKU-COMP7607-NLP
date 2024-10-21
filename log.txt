@@ -1,6 +1,6 @@
 temperature     1.5     1.0     0.8     0.5     0.3     0.2
-pass@1          0.372   0.565   0.611   0.632   0.651   0.657
-pass@3          0.599   0.725   0.759   0.749   0.727   0.702
+pass@1          0.372   0.565   0.611   0.630   0.651   0.656
+pass@3          0.599   0.725   0.759   0.748   0.727   0.701
 
 (temperature=0.8)
 top_p           1.0     0.8     0.6
@@ -13,6 +13,6 @@ pass@1          0.572       0.608
 pass@3          0.693       0.787
 
 modified methodology
-method          baseline    self_evolve
-pass@1          0.635
-pass@3          0.740
+method          baseline    self_evolve(3shot)
+pass@1          0.654       0.663
+pass@3          0.746       0.780
