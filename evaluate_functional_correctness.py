@@ -33,7 +33,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--problem_file", type=str, required=True, help="problem prompt")
     parser.add_argument("--sample_file", type=str, required=True, help="prediction file saving task_id and completion")
-    args = parser.parse_args(args=['--sample_file', 'example_samples.jsonl', '--problem_file', 'example_problem.jsonl'])
+    args = parser.parse_args()
     entry_point(sample_file=args.sample_file,
                 problem_file=args.problem_file)
 
