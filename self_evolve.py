@@ -95,7 +95,7 @@ if __name__ == '__main__':
     concatenate_dict(history, prompts, ['sub_prompt_0'], ['prompt'])
     step = 0
     slow_print('first step start, ask for knowledge:')
-    history = get_batch(history, 3)
+    history = get_batch(history, 5)
     res = service.request_response([line[f'sub_prompt_{step}'] for line in history])
     slow_print('knowledge get, ask for solution:')
     step = next_step_prompts(history, res, step)
