@@ -2,16 +2,17 @@ from utils import *
 from baseline import write_jsonl, stream_jsonl, read_problems
 
 
-OUTPUTFILE = ""
+OUTPUTFILE = "method_SelfEvolve.jsonl"
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
 # following prompts templates are based on the method from this paper:https://arxiv.org/pdf/2306.02907
 FIRST_STEP={
     'knowledge': "For the above question, could you briefly teach me how to solve it step by step in natural language?\nDon't write the code in this step.",
-    'solution': "Based on the above idea, help me complete the function.\nBe attention, you should only output the codes without any explanation, comment, natural language and testcode."
+    'solution': "Based on the above idea, help me complete the function.\nBe attention, you should only output the codes without any explanation, comment, natural language and testcode.\n\
+Warp your code with \"'''\""
 }
 SELF_REFINEMENT={
-    "syntax":"When I run this code, I meet %.\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.",
-    "error":"I failed when going through the assertation:\n%\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode."
+    "syntax":"When I run this code, I meet %.\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\"",
+    "error":"I failed when going through the assertation:\n%\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\""
 }
 
 def get_input_list_se(evalset_file: str = HUMAN_EVAL):
@@ -67,7 +68,7 @@ def next_step_prompts(in_dict_list: list[dict], response: list[str | dict], step
                 error_type = 'error' if result['result'] == "failed: " else 'syntax'
                 # reconstruct the executed code
                 executed_code = (
-                    line["input"] + result['completion'] + "\n" +
+                    result['completion'] + "\n" +
                     result["test"] + "\n" +
                     f"check({result['entry_point']})"
                 )

@@ -1,10 +1,13 @@
 import time
+import itertools
 from openai import OpenAI
 from tqdm import tqdm
 from modified_execution import check_correctness
 from collections import defaultdict, Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import List, Union, Iterable, Dict
 import copy
+import numpy as np
 
 
 URL = "https://api.sambanova.ai/v1"
@@ -114,11 +117,37 @@ def concatenate_str(in_dict_list: list[dict], append_str_list: list[str], key: s
         for i, line in enumerate(in_dict_list):
             line[key] = append_str_list[i]
 
+def estimate_pass_at_k(
+    num_samples: Union[int, List[int], np.ndarray],
+    num_correct: Union[List[int], np.ndarray],
+    k: int
+) -> np.ndarray:
+    """
+    Estimates pass@k of each problem and returns them in an array.
+    """
+
+    def estimator(n: int, c: int, k: int) -> float:
+        """
+        Calculates 1 - comb(n - c, k) / comb(n, k).
+        """
+        if n - c < k:
+            return 1.0
+        return 1.0 - np.prod(1.0 - k / np.arange(n - c + 1, n + 1))
+
+    if isinstance(num_samples, int):
+        num_samples_it = itertools.repeat(num_samples, len(num_correct))
+    else:
+        assert len(num_samples) == len(num_correct)
+        num_samples_it = iter(num_samples)
+
+    return np.array([estimator(int(n), int(c), k) for n, c in zip(num_samples_it, num_correct)])
+
 def check_testcase(
     completions: list[dict],
     problems: list[dict],
     n_workers: int = 4,
-    timeout: float=3.0
+    timeout: float=3.0,
+    k: List[int] = [1, 3, 10],
 ):
     """
     construct the 1st test case of each problem and then test it with the completion of the model
@@ -155,8 +184,19 @@ def check_testcase(
             result = future.result()
             results[result["task_id"]].append((result["completion_id"], result))
 
+        # Calculate pass@k.
+    total, correct = [], []
     for result in results.values():
         result.sort()
+        passed = [r[1]["passed"] for r in result]
+        total.append(len(passed))
+        correct.append(sum(passed))
+    total = np.array(total)
+    correct = np.array(correct)
+
+    ks = k
+    pass_at_k = {f"pass@{k}": estimate_pass_at_k(total, correct, k).mean()
+                 for k in ks if (total >= k).all()}
 
     for sample in completions:
         task_id = sample["task_id"]
@@ -165,7 +205,7 @@ def check_testcase(
         sample["passed"] = result[1]["passed"]
         sample["test"] = temp_dict[task_id]["test"]
         sample["entry_point"] = temp_dict[task_id]["entry_point"]
-    print('Test complete.')
+    print(f'Test complete. {pass_at_k}')
     return completions
 
 def slow_print(string :str):

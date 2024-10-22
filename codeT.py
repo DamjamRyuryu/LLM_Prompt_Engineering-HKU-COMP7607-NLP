@@ -41,12 +41,12 @@ if __name__ == '__main__':
     service = LlamaModel(URL, API_KEY, 1.0, 1,1.0)
     inputs = get_input_list_ct(HUMAN_EVAL)
     prompts = get_prompt_list_ct(inputs)
-    history = [{'task_id': item['task_id'], 'input': item['prompt']} for item in inputs[0:10]]
-    # concatenate_dict(history, inputs, ['input'], ['prompt'])
-    concatenate_dict(history, prompts['solution'][0:10], ['prompt'], ['prompt'])
-    history = get_batch(history, 5)
-    slow_print('Prompts generate complete. Requesting for solutions...')
-    solutions = service.request_response([line['prompt'] for line in history])
+    # history = [{'task_id': item['task_id'], 'input': item['prompt']} for item in inputs[0:10]]
+    # # concatenate_dict(history, inputs, ['input'], ['prompt'])
+    # concatenate_dict(history, prompts['solution'][0:10], ['prompt'], ['prompt'])
+    # history = get_batch(history, 5)
+    # slow_print('Prompts generate complete. Requesting for solutions...')
+    # solutions = service.request_response([line['prompt'] for line in history])
     if not os.path.exists(TEST_OUTPUT):
         slow_print('No pre-generated testcases. Requesting for testcases...')
         testcases = [
@@ -55,11 +55,10 @@ if __name__ == '__main__':
                 'entry_point': item['entry_point'],
                 'ground_truth_fn': item['ground_truth_fn'],
                 'template': item['test']
-            } for item in inputs
+            } for item in inputs[0:10]
         ]
         concatenate_dict(testcases, prompts['testcase'], ['prompt'], ['prompt'])
         test_res = service.request_response([line['prompt'] for line in testcases])
         concatenate_str(testcases, test_res, 'testcase')
-        pass
     # write_jsonl(OUTPUTFILE, )
     print('DONE')
