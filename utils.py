@@ -14,7 +14,6 @@ URL = "https://api.sambanova.ai/v1"
 API_KEY = "e439dfc0-6235-400f-83d7-9847afba0b57"
 MODEL = "Meta-Llama-3.1-8B-Instruct"
 HUMAN_EVAL = "pre_generated_data/HumanEval.jsonl"
-
 class LlamaModel:
     def __init__(self, url, api_key, temperature: float = 1.0, attempts=1, top_p=1.0):
         self.client = OpenAI(base_url=url, api_key=api_key)
@@ -70,6 +69,10 @@ def get_batch(in_prompt: list[dict], batch_size = 5):
     return _output
 
 def solution_to_completion(solution: str) -> str:
+    """
+    filter necessary code.
+    The constraints are relaxed
+    """
     _completion = solution.strip("'''")
     # _completion = _completion[1] if len(_completion) == 3 else "'''".join(_completion[1:-1])  # obtain the completion
     # erase the function definition line (already included in the problem prompt)
@@ -80,6 +83,23 @@ def solution_to_completion(solution: str) -> str:
     if "\ndef check(candidate):" in _completion:
         _completion = _completion[:_completion.find("\ndef check(candidate):")]
     return _completion
+
+def extract_assertation(whole_code: str) -> list[str]:
+    """
+    extract and separate test codes
+    """
+    _code_block = whole_code.strip("'''")
+    _testcases = []
+    # cut off codes above
+    _template = "def check(candidate):"
+    if _template in _code_block:
+        _code_block = _code_block[_code_block.find(_template) + 1:]
+        _code_block = _code_block[_code_block.find('\n') + 1:] # next line
+        # roughly separate the testcases
+        _temp_lines = _code_block.split('    assert ')[1:] # the first one should be ''
+        for line in _temp_lines:
+            _testcases.append('    assert ' + line)
+    return _testcases
 
 def concatenate_dict(in_dict_list: list[dict], append_dict_list: list[dict], new_keys: list[str], append_keys: list[str], has_indices: bool= False):
     """
@@ -148,6 +168,7 @@ def check_testcase(
     n_workers: int = 4,
     timeout: float=3.0,
     k: List[int] = [1, 3, 10],
+    verify: bool = False
 ):
     """
     construct the 1st test case of each problem and then test it with the completion of the model
@@ -170,7 +191,11 @@ def check_testcase(
         for sample in completions:
             task_id = sample["task_id"]
             completion = sample["completion"]
-            args = (temp_dict[task_id], completion, timeout, completion_id[task_id])
+            if verify:
+                _problems = {'task_id': task_id, 'entry_point': sample['entry_point'], 'test': sample['test']}
+                args = (_problems, completion, timeout, completion_id[task_id])
+            else:
+                args = (temp_dict[task_id], completion, timeout, completion_id[task_id])
             future = executor.submit(check_correctness, *args)
             futures.append(future)
             completion_id[task_id] += 1
@@ -203,8 +228,9 @@ def check_testcase(
         result = results[task_id].pop(0)
         sample["result"] = result[1]["result"]
         sample["passed"] = result[1]["passed"]
-        sample["test"] = temp_dict[task_id]["test"]
-        sample["entry_point"] = temp_dict[task_id]["entry_point"]
+        if not verify:
+            sample["test"] = temp_dict[task_id]["test"]
+            sample["entry_point"] = temp_dict[task_id]["entry_point"]
     print(f'Test complete. {pass_at_k}')
     return completions
 
