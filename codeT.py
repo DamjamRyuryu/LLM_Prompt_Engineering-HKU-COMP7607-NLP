@@ -1,3 +1,4 @@
+from collections import Counter
 from utils import *
 from baseline import write_jsonl, stream_jsonl, read_problems
 import os
@@ -39,6 +40,11 @@ def get_prompt_list_ct(input_list):
     return {'solution':code_prompts,'testcase': test_prompts}
 
 def construct_test_case(cases: list[str]):
+    """
+    put the assertations into the check function, output be like:
+    def check(candidate):
+        assert <test case>
+    """
     _test = []
     for line in cases:
         _temp = "\ndef check(candidate):\n" + line
@@ -46,6 +52,10 @@ def construct_test_case(cases: list[str]):
     return _test
 
 def construct_verify_case(_testcases: list[dict]):
+    """
+    create verification lists for testing the generated testcases.
+    use canonical_solution as the ground truth function
+    """
     _verify_list = []
     for line in _testcases:
         for _case in line['testcase']:
@@ -66,8 +76,13 @@ def construct_verify_case(_testcases: list[dict]):
             _verify_sets.append(line)
     return _verify_sets
 
-def generate_test_cases(_input_file: list[dict], _prompts_file: list[dict]):
-    slow_print('No pre-generated testcases. Requesting for testcases...')
+def generate_test_cases(_input_file: list[dict], _prompts_file: list[dict], append: bool= False):
+    """
+    request the LLM to generate testcases for the problems
+    the generated testcases will go through a check with the canonical solution to ensure its feasibility
+    the checked testcases will be saved to TEST_OUTPUT.
+    NO solution will be generated if TEST_OUTPUT doesn't exist, so rerun this script after generating the test file.
+    """
     testcases = [
         {
             'task_id': item['task_id'],
@@ -75,7 +90,7 @@ def generate_test_cases(_input_file: list[dict], _prompts_file: list[dict]):
             'entry_point': item['entry_point'],
             'ground_truth_fn': item['ground_truth_fn'],
             'template': item['test']
-        } for item in _input_file[0:2]
+        } for item in _input_file
     ]
     concatenate_dict(testcases, _prompts_file, ['prompt'], ['prompt'])
     testcases = get_batch(testcases, 5)
@@ -91,12 +106,28 @@ def generate_test_cases(_input_file: list[dict], _prompts_file: list[dict]):
     for line in verify_results:
         if line['passed']:
             output.append({'task_id': line['task_id'], 'entry_point': line['entry_point'], 'test': line['test']})
-    slow_print("Result verified. Saving the testcases...")
-    write_jsonl(TEST_OUTPUT, output)
+    if append:
+        slow_print(f"Result verified, {len(output)} testcases generated. Return the testcases")
+        return output
+    else:
+        slow_print(f"Result verified, {len(output)} testcases generated. Saving the testcases...")
+        write_jsonl(TEST_OUTPUT, output)
+        slow_print("File saved. Please rerun the process.")
+        return None
+
+def count_testcase(_list : list[dict], _threshold: int):
+    """
+    count the testcases and return the 'task_id' indices having fewer cases than given _threshold
+    used for finding problems without enough testcases
+    """
+    _keys = [d['task_id'] for d in _list]
+    _counter = Counter(_keys)
+    _filtered_list = [key for key, cnt in _counter.items() if cnt > 20]
+    return _filtered_list
 
 
 if __name__ == '__main__':
-    service = LlamaModel(URL, API_KEY, 1.0, 1,1.0)
+    service = LlamaModel(URL, API_KEY, 1.3, 1,1.0)
     inputs = get_input_list_ct(HUMAN_EVAL)
     prompts = get_prompt_list_ct(inputs)
     # history = [{'task_id': item['task_id'], 'input': item['prompt']} for item in inputs[0:10]]
@@ -106,6 +137,20 @@ if __name__ == '__main__':
     # slow_print('Prompts generate complete. Requesting for solutions...')
     # solutions = service.request_response([line['prompt'] for line in history])
     if not os.path.exists(TEST_OUTPUT):
+        slow_print('No pre-generated testcases. Requesting for testcases...')
         generate_test_cases(inputs, prompts['testcase'])
+    else:
+        testcase = [case for case in stream_jsonl(TEST_OUTPUT)]
+        lack_indices = count_testcase(testcase, 5)
+        if lack_indices:
+            slow_print('Some problems lack testcase, attempting to generate more...')
+            lack_inputs = [line for line in inputs if line['task_id'] in lack_indices]
+            lack_prompts = [line for line in prompts['testcase'] if line['task_id'] in lack_indices]
+            supplied_case = generate_test_cases(lack_inputs, lack_prompts, append=True)
+            testcase.extend(supplied_case)
+            sorted_testcase = sorted(testcase, key=lambda d: int(d['task_id'].split('/')[1]))
+            write_jsonl(TEST_OUTPUT.rstrip('.jsonl') + '_extra.jsonl',sorted_testcase)
+            slow_print("Generate complete.")
+
     # write_jsonl(OUTPUTFILE, )
     print('DONE')
