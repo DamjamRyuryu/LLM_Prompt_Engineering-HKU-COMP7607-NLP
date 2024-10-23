@@ -30,7 +30,7 @@ def args_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument("--problem_file", type=str, required=True, help="problem prompt")
     parser.add_argument("--output_file", type=str, required=True, help="jsonl file including the output")
-    _args = parser.parse_args(args=["--problem_file", HUMAN_EVAL, "--output_file", SELF_REFINE_FILE])
+    _args = parser.parse_args(args=["--problem_file", HUMAN_EVAL, "--output_file", 'method_CodeT.jsonl'])
     return _args
 
 if __name__ == '__main__':

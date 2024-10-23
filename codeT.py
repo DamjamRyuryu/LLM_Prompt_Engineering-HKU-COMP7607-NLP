@@ -1,8 +1,8 @@
-from collections import defaultdict, Counter
 from utils import *
 from baseline import write_jsonl, stream_jsonl, read_problems
 import os
 
+BATCH_SIZE = 5
 OUTPUTFILE = "method_CodeT.jsonl"
 TEST_OUTPUT = "pre_generated_data/generated_testcase.jsonl"
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
@@ -152,6 +152,7 @@ def uni_agreement(_results: list[dict], k: int=3) -> list[int]:
     find the top k solutions according to their verification results on testcases
     return a list of integers indicating the line index of top k results in the whole solution list
     """
+    assert BATCH_SIZE >= k, 'ERROR: not enough batches'
     _counter = defaultdict(Counter)
     # count passed cases for single solution
     for line in _results:
@@ -160,9 +161,23 @@ def uni_agreement(_results: list[dict], k: int=3) -> list[int]:
     # choose top k solutions
     _indices = []
     for task_id, line_index in _counter.items():
-        assert len(line_index) >= k, f'Error: not enough solutions for problem: {task_id}.'
-        top_k = line_index.most_common(k)
-        _indices.extend([i[0] for i in top_k])
+        if len(line_index) >= k:
+            top_k = line_index.most_common(k)
+            _indices.extend(copy.deepcopy([i[0] for i in top_k]))
+        elif len(line_index) > 0:
+            _diff = k - len(line_index)
+            top_k = line_index.most_common(len(line_index))
+            _idx_start = int(task_id.split('/')[1]) * BATCH_SIZE
+            _idx_group = [_idx_start + i for i in range(BATCH_SIZE)]
+            correct_cases = [i[0] for i in top_k]
+            left_cases = [i for i in _idx_group if i not in correct_cases]
+            _indices.extend(correct_cases + left_cases[0:_diff])
+        else:
+            slow_print(f'Warning: task_id {task_id}, has no correct solution')
+            _idx_start = int(task_id.split('/')[1]) * BATCH_SIZE
+            _append_indices = [_idx_start + i for i in range(k)]
+            _indices.extend(_append_indices)
+
     return _indices
 
 if __name__ == '__main__':
@@ -187,14 +202,23 @@ if __name__ == '__main__':
         #     write_jsonl(TEST_OUTPUT.rstrip('.jsonl') + '_extra.jsonl',sorted_testcase)
         slow_print("Testcases loaded.")
     if testcase_list:
-        history = [{'task_id': item['task_id'], 'input': item['prompt']} for item in inputs[0:2]]
-        concatenate_dict(history, prompts['solution'][0:2], ['prompt'], ['prompt'])
-        history = get_batch(history, 5)
+        history = [{'task_id': item['task_id'], 'input': item['prompt']} for item in inputs]
+        concatenate_dict(history, prompts['solution'], ['prompt'], ['prompt'])
+        history = get_batch(history, BATCH_SIZE)
         slow_print('Prompts generate complete. Requesting for solutions...')
-        solutions = service.request_response([line['prompt'] for line in history])
+        if os.path.exists('CodeT_response_temp.jsonl'):
+            solutions = [item['response'] for item in stream_jsonl('CodeT_response_temp.jsonl')]
+        else:
+            solutions = service.request_response([line['prompt'] for line in history])
+            # log the response so that the results can be tested later (the whole process will be time-consuming)
+            write_jsonl('CodeT_response_temp.jsonl', [{'response': item} for item in solutions])
         slow_print('check correctness with the testcases...')
         sample_list = match_solution_testcases(history, solutions, testcase_list)
-        test_results = check_testcase(sample_list, inputs, verify=True)
+        if not os.path.exists('ckpt_codeT.jsonl'):
+            test_results = check_testcase(sample_list, inputs, verify=True)
+            write_jsonl('ckpt_codeT.jsonl', test_results)
+        else:
+            test_results = [item for item in stream_jsonl('ckpt_codeT.jsonl')]
         better_indices = uni_agreement(test_results, 3)  # find top k solution
         output = [history[idx] for idx in better_indices]
         write_jsonl(OUTPUTFILE, output)
