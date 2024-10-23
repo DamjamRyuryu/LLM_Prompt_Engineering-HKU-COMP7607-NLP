@@ -1,10 +1,11 @@
 from utils import *
 from baseline import get_input_list, write_jsonl, stream_jsonl
-from codeT import TEST_OUTPUT, match_solution_testcases, uni_agreement
+from codeT import TEST_OUTPUT, match_solution_testcases
 from self_evolve import get_prompt_list_init, next_step_prompts
 import os
 import sys
 
+BATCH_SIZE = 5
 OUTPUTFILE = "method_Combined.jsonl"
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
 # following prompts templates are based on the method from this paper:https://arxiv.org/pdf/2306.02907
@@ -14,9 +15,10 @@ FIRST_STEP={
 Warp your code with \"'''\""
 }
 SELF_REFINEMENT={
-    "syntax":"When I run this code, I meet %.\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\"",
-    "error":"I failed when going through the assertation:\n%\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\""
+    "system": "The user will give you their failed Python code problem, help them refine the function so they can pass the check process.\nPay attention to their required output format.\nEnvironment: ipython.",
+    "padding":"My function failed when going through the tests.\n%\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\""
 }
+
 
 """
 The process is very time-consuming, create checkpoints at some stages, so you can continue next time without go through previous sections.
@@ -32,6 +34,64 @@ CHECKPOINTS = {
     'step 2': 'combined_2_temp.jsonl',
     'step 3': 'combined_3_temp.jsonl',
 }
+
+def uni_agreement_afb(_results: list[dict], k: int=3, q_cnt: int = 164) -> dict[str, list]:
+    """
+        find the top k solutions according to their verification results on testcases
+        return a list of integers indicating the line index of top k results in the whole solution list
+        AND ALSO:
+        record the failed tests of each selected completion and return the information for later refinement.
+        """
+    assert BATCH_SIZE >= k, 'ERROR: not enough batches'
+    _counter = defaultdict(Counter)
+    # count passed cases for single solution
+    for line in _results:
+        if line['passed']:
+            _counter[line['task_id']][line['line_index']] += 1
+    # choose top k solutions
+    _indices = []
+    for task_id, line_index in _counter.items():
+        if len(line_index) >= k:
+            top_k = line_index.most_common(k)
+            _indices.extend(copy.deepcopy([i[0] for i in top_k]))
+        elif len(line_index) > 0:
+            _diff = k - len(line_index)
+            top_k = line_index.most_common(len(line_index))
+            _idx_start = int(task_id.split('/')[1]) * BATCH_SIZE
+            _idx_group = [_idx_start + i for i in range(BATCH_SIZE)]
+            correct_cases = [i[0] for i in top_k]
+            left_cases = [i for i in _idx_group if i not in correct_cases]
+            _indices.extend(copy.deepcopy(correct_cases + left_cases[0:_diff]))
+    # scan for all-failed problems
+    for i in range(q_cnt):
+        task_id = f'HumanEval/{i}'
+        if task_id not in _counter.keys():
+            print(f'Notice: task_id: {task_id}, has no correct solution')
+            _idx_start = i * BATCH_SIZE
+            _append_indices = copy.deepcopy([_idx_start + i for i in range(k)])
+            _indices.extend(_append_indices)
+
+    # record failed testcases
+    _outputs = sorted(_indices)
+    _dict = {}
+    for line in _results:
+        line_index = line['line_index']
+        if line_index in _outputs:
+            if line_index not in _dict.keys():
+                _dict[line_index] = "" if line['passed'] else line['test']
+            elif not line['passed']:
+                _temp = _dict[line_index]
+                _dict[line_index] += line['test'] if _temp  else line['test'][line['test'].find("\n    assert "):]
+    return {"indices":_outputs, "wrong_tests": _dict}
+
+
+def construct_refinement_prompt(_output: list[dict], _completions: list[str], wrong_tests: dict[int, str]):
+    for idx, _str in enumerate(wrong_tests.values()):
+        if not _str:
+            _output[idx]['output'] = solution_to_completion(_completions[idx])
+        else:
+            raise NotImplementedError
+
 
 if __name__ == '__main__':
     service = LlamaModel(URL, API_KEY, 0.8, 1, 0.8)
@@ -74,8 +134,10 @@ if __name__ == '__main__':
         test_results = [item for item in stream_jsonl(CHECKPOINTS['step 3'])]
 
     # Step 4: go over uni-agreement and request LLM for refinement
-    # better_indices = uni_agreement(test_results, 3)  # find top k solution
-    # output = [history[idx] for idx in better_indices]
+    feedbacks = uni_agreement_afb(test_results, 3)  # find top k solution
+    output = [history[idx] for idx in feedbacks['indices']]
+    res = [res[idx] for idx in feedbacks['indices']]
+    construct_refinement_prompt(output, res, feedbacks['wrong_tests'])
     # step = next_step_prompts(history, test_result_1st, step)
     # sub_list = [{'index': line['index'], f'sub_prompt_{step}': line[f'sub_prompt_{step}']} for line in history if
     #             f'sub_prompt_{step}' in line]

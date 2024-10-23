@@ -205,7 +205,7 @@
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['a', '']) == 'a'\n"}
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['a', 'b']) == 'a'\n"}
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['abc', 'b', 'cd']) == 'abc'\n"}
-{"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['a', 'a', 'a','a']) == 'a'\n\ncheck(longest) "}
+{"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['a', 'a', 'a','a']) == 'a'\n"}
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['a', 'b', 'ccc']) == 'ccc'\n"}
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate(['hello', 'a', 'b', 'c']) == 'hello'\n"}
 {"task_id": "HumanEval/12", "entry_point": "longest", "test": "\ndef check(candidate):\n    assert candidate([]) == None\n"}
@@ -337,7 +337,7 @@
 {"task_id": "HumanEval/19", "entry_point": "sort_numbers", "test": "\ndef check(candidate):\n    assert candidate('four') == 'four'\n"}
 {"task_id": "HumanEval/19", "entry_point": "sort_numbers", "test": "\ndef check(candidate):\n    assert candidate('three one five') == 'one three five'\n"}
 {"task_id": "HumanEval/19", "entry_point": "sort_numbers", "test": "\ndef check(candidate):\n    assert candidate('zero zero one') == 'zero zero one'\n"}
-{"task_id": "HumanEval/19", "entry_point": "sort_numbers", "test": "\ndef check(candidate):\n    assert candidate('nine nine nine nine nine nine nine nine nine nine') == 'nine nine nine nine nine nine nine nine nine nine'  \n\ncheck(sort_numbers)"}
+{"task_id": "HumanEval/19", "entry_point": "sort_numbers", "test": "\ndef check(candidate):\n    assert candidate('nine nine nine nine nine nine nine nine nine nine') == 'nine nine nine nine nine nine nine nine nine nine'  \n"}
 {"task_id": "HumanEval/20", "entry_point": "find_closest_elements", "test": "\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.2]) == (2.0, 2.2)\n"}
 {"task_id": "HumanEval/20", "entry_point": "find_closest_elements", "test": "\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0]) == (2.0, 2.0)\n"}
 {"task_id": "HumanEval/20", "entry_point": "find_closest_elements", "test": "\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 5.2]) == (5.0, 5.2)\n"}
@@ -395,7 +395,7 @@
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('python') == 6, f\"Expected candidate('python') to return 6, but got {candidate('python')}\"\n"}
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('def') == 3, f\"Expected candidate('def') to return 3, but got {candidate('def')}\"\n"}
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('12345') == 5, f\"Expected candidate('12345') to return 5, but got {candidate('12345')}\"\n"}
-{"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('') == 0, f\"Expected candidate('') to return 0, but got {candidate('')}\"\"\"\ncheck(strlen)"}
+{"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('') == 0, f\"Expected candidate('') to return 0, but got {candidate('')}\""}
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('a') == 1\n"}
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('abc') == 3\n"}
 {"task_id": "HumanEval/23", "entry_point": "strlen", "test": "\ndef check(candidate):\n    assert candidate('123') == 3\n"}
@@ -445,7 +445,7 @@
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(7) == [7]\n"}
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(8) == [2, 2, 2]\n"}
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(9) == [3, 3]\n"}
-{"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(10) == [2, 5]\n    print(\"Tests passed\")\n\ncheck(factorize) "}
+{"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(10) == [2, 5]\n    print(\"Tests passed\")\n"}
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(21) == [3, 7]\n"}
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(25) == [5, 5]\n"}
 {"task_id": "HumanEval/25", "entry_point": "factorize", "test": "\ndef check(candidate):\n    assert candidate(70) == [2, 5, 7]\n"}
@@ -572,7 +572,7 @@
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(13) == True\n"}
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(33) == False\n"}
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(98) == False\n"}
-{"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(97) == True\n\ncheck(is_prime)\n\n"}
+{"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(97) == True\n"}
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(3) == True\n"}
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(5) == True\n"}
 {"task_id": "HumanEval/31", "entry_point": "is_prime", "test": "\ndef check(candidate):\n    assert candidate(4) == False\n"}
@@ -647,7 +647,7 @@
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([3]) == 3\n"}
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([float('inf'), 5, -3]) == float('inf')\n"}
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([5]) == 5\n"}
-{"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([5,-1,-4,1]) == 5\n\ncheck(max_element) "}
+{"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([5,-1,-4,1]) == 5\n"}
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3]) == 3\n"}
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10]) == 123\n"}
 {"task_id": "HumanEval/35", "entry_point": "max_element", "test": "\ndef check(candidate):\n    assert candidate([-1, -2, -3]) == -1\n"}
@@ -685,7 +685,7 @@
 {"task_id": "HumanEval/36", "entry_point": "fizz_buzz", "test": "\ndef check(candidate):\n    assert candidate(79) == 3\n"}
 {"task_id": "HumanEval/36", "entry_point": "fizz_buzz", "test": "\ndef check(candidate):\n    assert candidate(20) == 0 \n"}
 {"task_id": "HumanEval/36", "entry_point": "fizz_buzz", "test": "\ndef check(candidate):\n    assert candidate(31) == 0  \n"}
-{"task_id": "HumanEval/36", "entry_point": "fizz_buzz", "test": "\ndef check(candidate):\n    assert candidate(77) == 0                  \n"}
+{"task_id": "HumanEval/36", "entry_point": "fizz_buzz", "test": "\ndef check(candidate):\n    assert candidate(77) == 0  \n"}
 {"task_id": "HumanEval/37", "entry_point": "sort_even", "test": "\ndef check(candidate):\n    assert candidate([]) == []\n"}
 {"task_id": "HumanEval/37", "entry_point": "sort_even", "test": "\ndef check(candidate):\n    assert candidate([5]) == [5]\n"}
 {"task_id": "HumanEval/37", "entry_point": "sort_even", "test": "\ndef check(candidate):\n    assert candidate([5, 5]) == [5, 5]\n"}
@@ -903,7 +903,7 @@
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('aa') == True\n"}
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('bb') == True\n"}
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('abcdcba') == True\n"}
-{"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('racecar') == True\n\ncheck(is_palindrome)"}
+{"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('racecar') == True\n"}
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('aaaaa') == True\n"}
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('bob') == True\n"}
 {"task_id": "HumanEval/48", "entry_point": "is_palindrome", "test": "\ndef check(candidate):\n    assert candidate('world') == False\n"}
@@ -1160,7 +1160,7 @@
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"(\" * 100 + \")\") == False\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"(\"*100 + \")\"*101) == False\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"(\" * 100 + \")\" * 100) == True\n"}
-{"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"()()\")\n    candidate(\"(\")\n"}
+{"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"()()\")\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\")\") == False\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"((\") == False\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"))\") == False\n"}
@@ -1169,7 +1169,7 @@
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"(())\") == True\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"()()\") == True\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\")(\") == False\n"}
-{"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"())\") == False\n\ncheck(correct_bracketing)"}
+{"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"())\") == False\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"()\") == True, f\"Expected candidate('()') to return True, but got {candidate('()')} instead.\"\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\")()(\") == False, f\"Expected candidate(')()(') to return False, but got {candidate(')()(')} instead.\"\n"}
 {"task_id": "HumanEval/61", "entry_point": "correct_bracketing", "test": "\ndef check(candidate):\n    assert candidate(\"(\" * 50 + \")\" * 30) == False, f\"Expected candidate('(' * 50 + ')' * 30) to return False, but got {candidate('(' * 50 + ')' * 30)} instead.\"\n"}
@@ -1201,7 +1201,7 @@
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"bcdfg\") == 0, f\"Expected vowels_count('bcdfg') to return 0, but got {vowels_count('bcdfg')}\"\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"aeiou\") == 5, f\"Expected vowels_count('aeiou') to return 5, but got {vowels_count('aeiou')}\"\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"12345\") == 0, f\"Expected vowels_count('12345') to return 0, but got {vowels_count('12345')}\"\n"}
-{"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"Hello World\") == 3, f\"Expected vowels_count('Hello World') to return 3, but got {vowels_count('Hello World')}\"\n    \ncheck(vowels_count)"}
+{"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"Hello World\") == 3, f\"Expected vowels_count('Hello World') to return 3, but got {vowels_count('Hello World')}\"\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"abcde\") == 2\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"ACEDY\") == 3\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"aeiou\") == 5\n"}
@@ -1210,7 +1210,7 @@
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"Y\") == 1\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"a\") == 1\n"}
 {"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"A\") == 1\n"}
-{"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"xyz\") == 0\ncheck(vowels_count)\n\n"}
+{"task_id": "HumanEval/64", "entry_point": "vowels_count", "test": "\ndef check(candidate):\n    assert vowels_count(\"xyz\") == 0\n"}
 {"task_id": "HumanEval/65", "entry_point": "circular_shift", "test": "\ndef check(candidate):\n    assert circular_shift(12, 3) == \"21\"\n"}
 {"task_id": "HumanEval/65", "entry_point": "circular_shift", "test": "\ndef check(candidate):\n    assert candidate(12, 1) == \"21\"\n"}
 {"task_id": "HumanEval/65", "entry_point": "circular_shift", "test": "\ndef check(candidate):\n    assert candidate(12, 2) == \"12\"\n"}
@@ -1331,7 +1331,7 @@
 {"task_id": "HumanEval/70", "entry_point": "strange_sort_list", "test": "\ndef check(candidate):\n    assert candidate([100, 90]) == [90, 100]\n"}
 {"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(10, 10, 10) == 43.30\n"}
 {"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(1, 1, 2) == -1\n"}
-{"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(16, 30, 54) == -1\n# Call the function with an argument of 'triangle_area' to test with different inputs\ncheck(triangle_area)"}
+{"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(16, 30, 54) == -1\n# Call the function with an argument of 'triangle_area' to test with different inputs\n"}
 {"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(3, 4, 5) == 6.00\n"}
 {"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert triangle_area(5, 12, 13) == 30.00 \n"}
 {"task_id": "HumanEval/71", "entry_point": "triangle_area", "test": "\ndef check(candidate):\n    assert candidate(3, 4, 5) == 6.00\n"}
@@ -1381,7 +1381,7 @@
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1, 1])  == 0\n"}
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 2, 2, 1, 1, 1])  == 1\n"}
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3])  == 1\n"}
-{"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4])  == 2\ncheck(smallest_change)\n"}
+{"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4])  == 2\n"}
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert smallest_change([1,1]) == 0\n"}
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert smallest_change([1,2]) == 1\n"}
 {"task_id": "HumanEval/73", "entry_point": "smallest_change", "test": "\ndef check(candidate):\n    assert smallest_change([1,2,3,4,2,1]) == 1\n"}
@@ -1406,7 +1406,7 @@
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['a', 'b', 'c', 'd', 'e', 'f', 'g'], ['a', 'b', 'c', 'd', 'e']) == ['a', 'b', 'c', 'd', 'e']\n"}
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['a', 'b', 'c', 'd', 'e', 'f'], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']) == ['a', 'b', 'c', 'd', 'e', 'f']\n"}
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['4'], ['1', '2', '3', '4', '5']) == ['4']\n"}
-{"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['a'], ['a', 'a']) == ['a']\n\ncheck(total_match)"}
+{"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['a'], ['a', 'a']) == ['a']\n"}
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['apple', 'banana'], ['orange', 'grape']) == ['apple', 'banana']\n"}
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['a', 'b', 'c'], ['d', 'e', 'f']) == ['a', 'b', 'c']\n"}
 {"task_id": "HumanEval/74", "entry_point": "total_match", "test": "\ndef check(candidate):\n    assert total_match(['hello', 'world'], ['python', 'programming']) == ['hello', 'world']\n"}
@@ -1425,7 +1425,7 @@
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(23) == False\n"}
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(37) == False\n"}
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(89) == False\n"}
-{"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(95) == False\n\ncheck(is_multiply_prime)"}
+{"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(95) == False\n"}
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(31) == False\n"}
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert candidate(97) == False\n"}
 {"task_id": "HumanEval/75", "entry_point": "is_multiply_prime", "test": "\ndef check(candidate):\n    assert is_multiply_prime(30) == True\n"}
@@ -1447,7 +1447,7 @@
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert candidate(100, 10) == True\n"}
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert candidate(100, 5) == False\n"}
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert candidate(1, 1) == True\n"}
-{"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert candidate(16, 2) == True\n\ncheck(is_simple_power)"}
+{"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert candidate(16, 2) == True\n"}
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert is_simple_power(1, 1) == True\n"}
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert is_simple_power(4, 2) == True\n"}
 {"task_id": "HumanEval/76", "entry_point": "is_simple_power", "test": "\ndef check(candidate):\n    assert is_simple_power(16, 4) == True\n"}
@@ -1717,7 +1717,7 @@
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"I am so happy!\") == 1\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"I like reading books and\") == 1\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"I love my family!\") == 1\n"}
-{"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"I have no idea what to do\") == 1\n\ncheck(is_bored)"}
+{"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"I have no idea what to do\") == 1\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"Hello world\") == 0, f\"Expected candidate('Hello world') to return 0, but got {candidate('Hello world')}\"\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"The sky is blue. The sun is shining. I love this weather\") == 1, f\"Expected candidate('The sky is blue. The sun is shining. I love this weather') to return 1, but got {candidate('The sky is blue. The sun is shining. I love this weather')}\"\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert candidate(\"\") == 0, f\"Expected candidate('') to return 0, but got {candidate('')}\"\n"}
@@ -1729,7 +1729,7 @@
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert is_bored(\"This is not a boredom\") == 0"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert is_bored(\"The sky is blue. The sun is shining. I love this weather. You are happy\") == 1\n"}
 {"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert is_bored(\"I am bored. I am tired. I am happy\") == 3\n"}
-{"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert is_bored(\"This is a test\") == 0\ncheck(is_bored)\n"}
+{"task_id": "HumanEval/91", "entry_point": "is_bored", "test": "\ndef check(candidate):\n    assert is_bored(\"This is a test\") == 0\n"}
 {"task_id": "HumanEval/92", "entry_point": "any_int", "test": "\ndef check(candidate):\n    assert not candidate(2, 2, 2)\n"}
 {"task_id": "HumanEval/92", "entry_point": "any_int", "test": "\ndef check(candidate):\n    assert not candidate(3, -2, 2)\n"}
 {"task_id": "HumanEval/92", "entry_point": "any_int", "test": "\ndef check(candidate):\n    assert not candidate(3.6, -2, 2)\n"}
@@ -2022,10 +2022,10 @@
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([5]) == True\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1, 1]) == True\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([10]) == True\n"}
-{"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([3, 2, 4, 1, 5]) == False\n\ncheck(move_one_ball)\n"}
+{"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([3, 2, 4, 1, 5]) == False\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3]) == True\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([3, 2, 1]) == False\n"}
-{"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([1, 5, 3, 2, 4]) == False\n\ncheck(move_one_ball)\n"}
+{"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([1, 5, 3, 2, 4]) == False\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([2, 2, 1, 1]) == True\n"}
 {"task_id": "HumanEval/109", "entry_point": "move_one_ball", "test": "\ndef check(candidate):\n    assert candidate([5, -3, -2, -4, -1]) == False\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([2, 4, 6, 8], [1, 3, 5, 7]) == \"YES\"\n"}
@@ -2046,13 +2046,13 @@
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [1, 1, 1, 1]) == \"NO\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4], [1, 1, 1, 1]) == \"NO\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [2, 2, 1, 1]) == \"NO\"\n"}
-{"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 1, 2], [2, 2, 1, 1]) == \"YES\"\ncheck(exchange)"}
+{"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 1, 2], [2, 2, 1, 1]) == \"YES\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([2, 2, 2, 2], [1, 1, 1, 1]) == \"YES\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4], [1, 2, 3, 5]) == \"NO\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4], [1, 3, 5, 7]) == \"NO\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 3, 5, 7], [2, 5, 6, 7]) == \"NO\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [2, 2, 2, 3]) == \"NO\"\n"}
-{"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [2, 2, 2, 4]) == \"YES\"\n\ncheck(exchange)"}
+{"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [2, 2, 2, 4]) == \"YES\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([2, 2, 2, 2], [1, 5, 3, 4]) == \"YES\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4], [5, 6, 7, 8]) == \"YES\"\n"}
 {"task_id": "HumanEval/110", "entry_point": "exchange", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1], [5, 5, 5, 5]) == \"NO\"\n"}
@@ -2096,7 +2096,7 @@
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert candidate([-1, -2, -3]) ==-6\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert candidate([0, 0, 0, 0]) ==0\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1]) ==1\n"}
-{"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert candidate([5, 5, 5, 5]) ==5\n\ncheck(minSubArraySum)"}
+{"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert candidate([5, 5, 5, 5]) ==5\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([1, -2, 3]) == -2\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([-1, -1, -1]) == -3\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([5]) == 5\n"}
@@ -2116,7 +2116,7 @@
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([2]) == 2\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([1, 2, 3]) == 1\n"}
 {"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([0, 1, 2]) == 0\n"}
-{"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([0, 0, -1]) == -1\n\ncheck(minSubArraySum)"}
+{"task_id": "HumanEval/114", "entry_point": "minSubArraySum", "test": "\ndef check(candidate):\n    assert minSubArraySum([0, 0, -1]) == -1\n"}
 {"task_id": "HumanEval/115", "entry_point": "max_fill", "test": "\ndef check(candidate):\n    assert max_fill([[0, 1]], 2) == 1\n"}
 {"task_id": "HumanEval/115", "entry_point": "max_fill", "test": "\ndef check(candidate):\n    assert max_fill([[1,1,1,1]], 10) == 1\n"}
 {"task_id": "HumanEval/115", "entry_point": "max_fill", "test": "\ndef check(candidate):\n    assert max_fill([[1,1,1], [1,1,1]], 1) == 6\n"}
@@ -2161,7 +2161,7 @@
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert select_words(\"I love Python\", 1) == []\n"}
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert select_words(\"This is a test\", 6) == []\n"}
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert candidate(\"\", 1) == []\n"}
-{"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert candidate(\"aeiou\", 4) == []    \n    \n\ncheck(select_words)"}
+{"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert candidate(\"aeiou\", 4) == []    \n"}
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert select_words(\"one\", 1) == [\"one\"]\n"}
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert select_words(\"\", 0) == []\n"}
 {"task_id": "HumanEval/117", "entry_point": "select_words", "test": "\ndef check(candidate):\n    assert select_words(\"Not Consonants\", 3) == []\n\n    pass"}
@@ -2205,7 +2205,7 @@
 {"task_id": "HumanEval/119", "entry_point": "match_parens", "test": "\ndef check(candidate):\n    assert match_parens(['', '']) == 'Yes'\n"}
 {"task_id": "HumanEval/119", "entry_point": "match_parens", "test": "\ndef check(candidate):\n    assert match_parens(['()(()', ')()']) == 'Yes'\n"}
 {"task_id": "HumanEval/119", "entry_point": "match_parens", "test": "\ndef check(candidate):\n    assert match_parens(['()' ,'(())']) == 'Yes'\n"}
-{"task_id": "HumanEval/119", "entry_point": "match_parens", "test": "\ndef check(candidate):\n    assert match_parens(['()', ')' ]) == 'No'\n\ncheck(match_parens)"}
+{"task_id": "HumanEval/119", "entry_point": "match_parens", "test": "\ndef check(candidate):\n    assert match_parens(['()', ')' ]) == 'No'\n"}
 {"task_id": "HumanEval/120", "entry_point": "maximum", "test": "\ndef check(candidate):\n    assert candidate([-3, -4, 5], 3) == [-4, -3, 5]\n"}
 {"task_id": "HumanEval/120", "entry_point": "maximum", "test": "\ndef check(candidate):\n    assert candidate([4, -4, 4], 2) == [4, 4]\n"}
 {"task_id": "HumanEval/120", "entry_point": "maximum", "test": "\ndef check(candidate):\n    assert candidate([-3, 2, 1, 2, -1, -2, 1], 1) == [2]\n    # Check k size is equal to array size\n"}
@@ -2323,7 +2323,7 @@
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([1, 2]) == True\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([1, 2, 2, 3, 3, 3, 3, 4]) == False\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([2, 3, 5]) == True\n"}
-{"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([3, 2]) == False\n\ncheck(is_sorted)"}
+{"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([3, 2]) == False\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([1, 2, 2, 2, 3, 4]) == False\n\n    # Check lists with repeated numbers\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([1, 2, 3, 4, 5, 6]) == True\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert is_sorted([1, 2, 3, 4, 5, 6, 7]) == True\n\n    # Check lists with many repeated numbers\n"}
@@ -2343,7 +2343,7 @@
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert candidate([1, 1, 1, 1, 1]) == False\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert candidate([1, 3, 2, 4, 5, 6]) == False\n"}
 {"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 2, 2, 2, 3]) == False\n"}
-{"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4, 5, 6, 7]) == True\n    \ncheck(is_sorted)"}
+{"task_id": "HumanEval/126", "entry_point": "is_sorted", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3, 4, 5, 6, 7]) == True\n"}
 {"task_id": "HumanEval/127", "entry_point": "intersection", "test": "\ndef check(candidate):\n    assert candidate((1, 2), (2, 3)) == \"NO\"\n"}
 {"task_id": "HumanEval/127", "entry_point": "intersection", "test": "\ndef check(candidate):\n    assert candidate((-1, 1), (0, 4)) == \"NO\"\n"}
 {"task_id": "HumanEval/127", "entry_point": "intersection", "test": "\ndef check(candidate):\n    assert candidate((-3, -1), (-5, 5)) == \"YES\"\n"}
@@ -2431,7 +2431,7 @@
 {"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert candidate('[[][]]') == True\n"}
 {"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert candidate('[[]][[') == True\n"}
 {"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert candidate('[[]])]') == True\n"}
-{"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert candidate(']') == False\n\n\ncheck(is_nested)"}
+{"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert candidate(']') == False\n"}
 {"task_id": "HumanEval/132", "entry_point": "is_nested", "test": "\ndef check(candidate):\n    assert is_nested('[[]][[]]') == True\n"}
 {"task_id": "HumanEval/133", "entry_point": "sum_squares", "test": "\ndef check(candidate):\n    assert candidate([1, 2, 3]) == 14\n"}
 {"task_id": "HumanEval/133", "entry_point": "sum_squares", "test": "\ndef check(candidate):\n    assert candidate([1, 4, 9]) == 98\n"}
@@ -2482,11 +2482,11 @@
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,2,3]) == -1\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,1,1,1,1]) == -1\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,2,3,4,5]) == -1\n"}
-{"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,5,3,4,2]) == 4\ncheck(can_arrange)"}
+{"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,5,3,4,2]) == 4\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert candidate([1,2,4,3,5]) == 3, \"Test case 1 failed\"\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert candidate([1]) == -1, \"Test case 9 failed\"\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert candidate([2,1]) == 1, \"Test case 10 failed\"\n"}
-{"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,2,5,3,4]) == 3\ncheck(can_arrange)\n"}
+{"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,2,5,3,4]) == 3\n"}
 {"task_id": "HumanEval/135", "entry_point": "can_arrange", "test": "\ndef check(candidate):\n    assert can_arrange([1,2,1]) == 2\n"}
 {"task_id": "HumanEval/136", "entry_point": "largest_smallest_integers", "test": "\ndef check(candidate):\n    assert candidate([2, 4, 1, 3, 5, 7]) == (None, 1)\n"}
 {"task_id": "HumanEval/136", "entry_point": "largest_smallest_integers", "test": "\ndef check(candidate):\n    assert candidate([]) == (None, None)\n"}
@@ -2576,10 +2576,10 @@
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"a.exe\") == 'Yes'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"1.exe\") == 'No'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"example.dll\") == 'Yes'\n"}
-{"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"1example.dll\") == 'No'\n\ncheck(file_name_check)"}
+{"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"1example.dll\") == 'No'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert file_name_check(\"abc.exe\") == 'Yes'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert file_name_check(\"123.abc\") == 'No'\n"}
-{"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert file_name_check(\"\") == 'No'\ncheck(file_name_check)"}
+{"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert file_name_check(\"\") == 'No'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"l\" + \"ab\" + \"c.txt\") == candidate(\"l\" + \"ab\" + \"c.txt\") \n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"1ab.c.txt\") == 'No'\n"}
 {"task_id": "HumanEval/141", "entry_point": "file_name_check", "test": "\ndef check(candidate):\n    assert candidate(\"1abc.txt\") == 'No'\n"}
@@ -2627,13 +2627,13 @@
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/1\", \"1/1\") == True\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"5/6\", \"1/1\") == False\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"7/8\", \"9/1\") == False\n"}
-{"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"3/9\", \"8/1\") == False\n\ncheck(simplify)"}
+{"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"3/9\", \"8/1\") == False\n\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/5\", \"5/1\") == True\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/6\", \"2/1\") == False\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"7/10\", \"10/2\") == False\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/6\", \"1/2\") == False\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"2/3\", \"1/2\") == False\n"}
-{"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/1\", \"1/1\") == True\n\nprint(\"Tests pass\")"}
+{"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert candidate(\"1/1\", \"1/1\") == True\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert simplify(\"1/5\", \"5/1\") == True\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert simplify(\"1/6\", \"2/1\") == False\n"}
 {"task_id": "HumanEval/144", "entry_point": "simplify", "test": "\ndef check(candidate):\n    assert simplify(\"3/4\", \"1/2\") == False\n"}
@@ -2903,7 +2903,7 @@
 {"task_id": "HumanEval/157", "entry_point": "right_angle_triangle", "test": "\ndef check(candidate):\n    assert not candidate(5, 5, 9)\n"}
 {"task_id": "HumanEval/157", "entry_point": "right_angle_triangle", "test": "\ndef check(candidate):\n    assert not right_angle_triangle(3, 3, 5)\n"}
 {"task_id": "HumanEval/157", "entry_point": "right_angle_triangle", "test": "\ndef check(candidate):\n    assert not right_angle_triangle(9, 1, 10)\n"}
-{"task_id": "HumanEval/157", "entry_point": "right_angle_triangle", "test": "\ndef check(candidate):\n    assert not right_angle_triangle(6, 8, 5)\n\ncheck(right_angle_triangle)"}
+{"task_id": "HumanEval/157", "entry_point": "right_angle_triangle", "test": "\ndef check(candidate):\n    assert not right_angle_triangle(6, 8, 5)\n"}
 {"task_id": "HumanEval/158", "entry_point": "find_max", "test": "\ndef check(candidate):\n    assert find_max([\"aa\", \"bb\", \"cc\"]) == \"aa\"\n"}
 {"task_id": "HumanEval/158", "entry_point": "find_max", "test": "\ndef check(candidate):\n    assert find_max([\"abcde\", \"abdec\", \"abc\"]) == \"abcde\"\n"}
 {"task_id": "HumanEval/158", "entry_point": "find_max", "test": "\ndef check(candidate):\n    assert find_max([\"pqrrr\", \"mnbnnb\"]), \"mnbnnb\"\n"}
