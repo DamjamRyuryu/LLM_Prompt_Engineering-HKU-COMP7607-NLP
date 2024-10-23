@@ -3,6 +3,7 @@ from baseline import write_jsonl, stream_jsonl, read_problems
 import os
 
 BATCH_SIZE = 5
+PROBLEM_CNT = 164
 OUTPUTFILE = "method_CodeT.jsonl"
 TEST_OUTPUT = "pre_generated_data/generated_testcase.jsonl"
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
@@ -161,6 +162,7 @@ def uni_agreement(_results: list[dict], k: int=3) -> list[int]:
     # choose top k solutions
     _indices = []
     for task_id, line_index in _counter.items():
+
         if len(line_index) >= k:
             top_k = line_index.most_common(k)
             _indices.extend(copy.deepcopy([i[0] for i in top_k]))
@@ -171,14 +173,16 @@ def uni_agreement(_results: list[dict], k: int=3) -> list[int]:
             _idx_group = [_idx_start + i for i in range(BATCH_SIZE)]
             correct_cases = [i[0] for i in top_k]
             left_cases = [i for i in _idx_group if i not in correct_cases]
-            _indices.extend(correct_cases + left_cases[0:_diff])
-        else:
-            slow_print(f'Warning: task_id {task_id}, has no correct solution')
-            _idx_start = int(task_id.split('/')[1]) * BATCH_SIZE
-            _append_indices = [_idx_start + i for i in range(k)]
+            _indices.extend(copy.deepcopy(correct_cases + left_cases[0:_diff]))
+    # scan for all-failed problems
+    for i in range(PROBLEM_CNT):
+        task_id = f'HumanEval/{i}'
+        if task_id not in _counter.keys():
+            print(f'Notice: task_id: {task_id}, has no correct solution')
+            _idx_start = i * BATCH_SIZE
+            _append_indices = copy.deepcopy([_idx_start + i for i in range(k)])
             _indices.extend(_append_indices)
-
-    return _indices
+    return sorted(_indices)
 
 if __name__ == '__main__':
     service = LlamaModel(URL, API_KEY, 0.8, 1,0.8)

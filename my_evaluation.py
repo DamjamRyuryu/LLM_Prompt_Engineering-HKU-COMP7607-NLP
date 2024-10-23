@@ -42,7 +42,8 @@ if __name__ == '__main__':
 
     entry_point(
         problem_file= args.problem_file,
-        sample_file= temp_file
+        sample_file= temp_file,
+        n_workers=16
     )
     os.remove(temp_file)
 

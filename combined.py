@@ -1,6 +1,6 @@
 from utils import *
 from baseline import get_input_list, write_jsonl, stream_jsonl
-from codeT import TEST_OUTPUT, match_solution_testcases
+from codeT import TEST_OUTPUT, match_solution_testcases, uni_agreement
 from self_evolve import get_prompt_list_init, next_step_prompts
 import os
 import sys
@@ -60,14 +60,22 @@ if __name__ == '__main__':
     else:
         res = [item['response'] for item in stream_jsonl(CHECKPOINTS['step 2'])]
 
-    # Step 2-1: load pre-generated testcases
+    # Step 3: load pre-generated testcases and verify the samples
     slow_print('Solution get. Loading testcases...')
     if not os.path.exists(TEST_OUTPUT):
         sys.exit('Testcases file NOT FOUND.')
     else:
         testcase_list = [case for case in stream_jsonl(TEST_OUTPUT)]
-    sample_list = match_solution_testcases(history, res, testcase_list)
-    test_results = check_testcase(sample_list, inputs, verify=True)
+    if not os.path.exists(CHECKPOINTS['step 3']):
+        sample_list = match_solution_testcases(history, res, testcase_list)
+        test_results = check_testcase(sample_list, inputs, verify=True, n_workers=16)
+        write_jsonl(CHECKPOINTS['step 3'], test_results)
+    else:
+        test_results = [item for item in stream_jsonl(CHECKPOINTS['step 3'])]
+
+    # Step 4: go over uni-agreement and request LLM for refinement
+    # better_indices = uni_agreement(test_results, 3)  # find top k solution
+    # output = [history[idx] for idx in better_indices]
     # step = next_step_prompts(history, test_result_1st, step)
     # sub_list = [{'index': line['index'], f'sub_prompt_{step}': line[f'sub_prompt_{step}']} for line in history if
     #             f'sub_prompt_{step}' in line]
@@ -76,5 +84,5 @@ if __name__ == '__main__':
     # res = service.request_response([line[f'sub_prompt_{step}'] for line in sub_list])
     # concatenate_str(sub_list, res, 'output', processing=True)
     # concatenate_dict(history, sub_list, ['output'], ['output'], has_indices=True)
-    write_jsonl(OUTPUTFILE, history)
+    # write_jsonl(OUTPUTFILE, history)
     print('DONE')
