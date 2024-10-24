@@ -1,3 +1,5 @@
+import copy
+
 from utils import *
 from baseline import get_input_list, write_jsonl, stream_jsonl
 from codeT import TEST_OUTPUT, match_solution_testcases
@@ -15,8 +17,9 @@ FIRST_STEP={
 Warp your code with \"'''\""
 }
 SELF_REFINEMENT={
+    "NO-PAD": "The user will give you their failed Python code problem, help them fix te bug so they can pass the check process.\nBe attention, you should only output the codes without any explanation, comment, natural language and testcode.\nEnvironment: ipython.",
     "system": "The user will give you their failed Python code problem, help them refine the function so they can pass the check process.\nPay attention to their required output format.\nEnvironment: ipython.",
-    "padding":"My function failed when going through the tests.\n%\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\""
+    "padding":"My function failed when going through the tests: %\n\nHelp me refine the code.\nYou should only output the codes without any explanation, comment, natural language and testcode.\nWrap your code with \"'''\""
 }
 
 
@@ -73,24 +76,33 @@ def uni_agreement_afb(_results: list[dict], k: int=3, q_cnt: int = 164) -> dict[
 
     # record failed testcases
     _outputs = sorted(_indices)
-    _dict = {}
+    _dict = defaultdict(dict)
     for line in _results:
         line_index = line['line_index']
         if line_index in _outputs:
-            if line_index not in _dict.keys():
-                _dict[line_index] = "" if line['passed'] else line['test']
+            if line_index not in _dict['concat_tests'].keys():
+                _dict['concat_tests'][line_index] = "" if line['passed'] else line['test'].strip()
+                _dict['entry_point'][line_index] = line['entry_point']
             elif not line['passed']:
-                _temp = _dict[line_index]
-                _dict[line_index] += line['test'] if _temp  else line['test'][line['test'].find("\n    assert "):]
+                _temp = _dict['concat_tests'][line_index]
+                _dict['concat_tests'][line_index] += line['test'].strip() if not _temp else line['test'][line['test'].find("\n    assert "):].rstrip()
     return {"indices":_outputs, "wrong_tests": _dict}
 
 
-def construct_refinement_prompt(_output: list[dict], _completions: list[str], wrong_tests: dict[int, str]):
-    for idx, _str in enumerate(wrong_tests.values()):
+def construct_refinement_prompt(_output: list[dict], _completions: list[str], wrong_tests: dict[str, dict]):
+    _iter = wrong_tests['concat_tests']
+    _entry_points = [line for line in wrong_tests['entry_point'].values()]
+    for idx, _str in enumerate(_iter.values()):
         if not _str:
+            _output[idx]['prompt'] = _output[idx].pop('sub_prompt_1')
             _output[idx]['output'] = solution_to_completion(_completions[idx])
         else:
-            raise NotImplementedError
+            _wrong_completion = solution_to_completion(_completions[idx]) + '\n\n' + _str + '\n\n'
+            _prompt = [
+                {"role": "system", "content": SELF_REFINEMENT['system']},
+                {"role": "user", "content": _wrong_completion + f"check({_entry_points[idx]})".join(SELF_REFINEMENT['padding'].split("%"))}
+            ]
+            _output[idx]['sub_prompt_2'] = copy.deepcopy(_prompt)
 
 
 if __name__ == '__main__':
@@ -126,6 +138,7 @@ if __name__ == '__main__':
         sys.exit('Testcases file NOT FOUND.')
     else:
         testcase_list = [case for case in stream_jsonl(TEST_OUTPUT)]
+    slow_print("Verifying solutions...")
     if not os.path.exists(CHECKPOINTS['step 3']):
         sample_list = match_solution_testcases(history, res, testcase_list)
         test_results = check_testcase(sample_list, inputs, verify=True, n_workers=16)
@@ -138,13 +151,11 @@ if __name__ == '__main__':
     output = [history[idx] for idx in feedbacks['indices']]
     res = [res[idx] for idx in feedbacks['indices']]
     construct_refinement_prompt(output, res, feedbacks['wrong_tests'])
-    # step = next_step_prompts(history, test_result_1st, step)
-    # sub_list = [{'index': line['index'], f'sub_prompt_{step}': line[f'sub_prompt_{step}']} for line in history if
-    #             f'sub_prompt_{step}' in line]
-    # slow_print(
-    #     'self-refinement start.')  # this implementation only do self refinement once, multiple iterations are not implemented
-    # res = service.request_response([line[f'sub_prompt_{step}'] for line in sub_list])
-    # concatenate_str(sub_list, res, 'output', processing=True)
-    # concatenate_dict(history, sub_list, ['output'], ['output'], has_indices=True)
-    # write_jsonl(OUTPUTFILE, history)
+    slow_print("Requesting LLM for refinement...")
+    sub_list = [{'index': index, f'sub_prompt_2': item[f'sub_prompt_2']}
+                for index, item in enumerate(output) if f'sub_prompt_2' in item]
+    res = service.request_response([item['sub_prompt_2'] for item in sub_list])
+    concatenate_str(sub_list, res, 'output', processing=True)
+    concatenate_dict(output, sub_list, ['output'], ['output'], has_indices=True)
+    write_jsonl(OUTPUTFILE, output)
     print('DONE')

@@ -110,12 +110,13 @@ def concatenate_dict(in_dict_list: list[dict], append_dict_list: list[dict], new
     """
     assert len(new_keys) == len(append_keys), f'Error: Wrong length of keys when concatenating. len(new) <{len(new_keys)}> should match with len(append) <{len(append_keys)}>'
     assert len(in_dict_list) <= len(append_dict_list) or has_indices, f'Error: Wrong length of input lists when concatenating without indices. len(in) <{len(in_dict_list)}> should not be larger than len(append) <{len(append_dict_list)}>'
-    if has_indices:  # TODO: This is the last part of the self_evolve program, if you want to further the iteration, remember to modify this part
+    if has_indices:  # TODO: This is the last part of the self_evolve/combined program, if you want to further the iteration, remember to modify this part
         for line in append_dict_list:
             assert 'index' in line, 'Error: index not found'
             i = line['index']
-            for j in range(len(new_keys)):
+            if 'index' in in_dict_list[i]:
                 del in_dict_list[i]['index']
+            for j in range(len(new_keys)):
                 in_dict_list[i]['prompt'] = in_dict_list[i].pop("sub_prompt_2")
                 in_dict_list[i][new_keys[j]] = line[append_keys[j]]
     else:
