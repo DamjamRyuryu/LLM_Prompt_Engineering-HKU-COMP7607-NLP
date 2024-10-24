@@ -6,7 +6,7 @@ import os
 
 
 ZEROSHOT_FILE = f'baseline_evals/zeroshot.baseline_top_p1.0.jsonl'
-SELF_REFINE_FILE = f'method_SelfEvolve.jsonl'
+SELF_EVOLVE_FILE = f'method_SelfEvolve.jsonl'
 def construct_completion(ansset_file: str = ZEROSHOT_FILE):
     id_completion_pairs = [{'task_id':output['task_id'], 'completion':output['output']} for output in stream_jsonl(ansset_file)]
     return id_completion_pairs

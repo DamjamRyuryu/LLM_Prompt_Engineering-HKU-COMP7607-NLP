@@ -13,6 +13,6 @@ pass@1          0.572       0.608
 pass@3          0.693       0.787
 
 modified methodology
-method          baseline    self_evolve(5shot)      codeT(5->3)     combined(5->3)
-pass@1          0.654       0.655                   0.634           0.748
-pass@3          0.746       0.808                   0.683           0.848
+method          baseline    self_evolve(5shot)      codeT(5->3)     combined(5->3)  combined(10->5)
+pass@1          0.654       0.655                   0.634           0.748           0.765
+pass@3          0.746       0.808                   0.683           0.848           0.826

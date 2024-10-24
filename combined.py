@@ -1,5 +1,3 @@
-import copy
-
 from utils import *
 from baseline import get_input_list, write_jsonl, stream_jsonl
 from codeT import TEST_OUTPUT, match_solution_testcases
@@ -7,7 +5,8 @@ from self_evolve import get_prompt_list_init, next_step_prompts
 import os
 import sys
 
-BATCH_SIZE = 5
+BATCH_SIZE = 10
+TOP_K = 5
 OUTPUTFILE = "method_Combined.jsonl"
 SYSTEM_PROMPT='''The user will ask you about Python code problem, follow their instructions. Pay attention to their required output format. Environment: ipython.'''
 # following prompts templates are based on the method from this paper:https://arxiv.org/pdf/2306.02907
@@ -38,7 +37,7 @@ CHECKPOINTS = {
     'step 3': 'combined_3_temp.jsonl',
 }
 
-def uni_agreement_afb(_results: list[dict], k: int=3, q_cnt: int = 164) -> dict[str, list]:
+def uni_agreement_afb(_results: list[dict], k: int=3, q_cnt: int = 164) -> dict[str, list | dict]:
     """
         find the top k solutions according to their verification results on testcases
         return a list of integers indicating the line index of top k results in the whole solution list
@@ -115,7 +114,7 @@ if __name__ == '__main__':
 
     # Step 1: request for knowledge
     slow_print('first step start, ask for knowledge...')
-    history = get_batch(history, 5)
+    history = get_batch(history, BATCH_SIZE)
     step = 0
     if not os.path.exists(CHECKPOINTS['step 1']):
         res = service.request_response([line[f'sub_prompt_{step}'] for line in history])
@@ -147,7 +146,7 @@ if __name__ == '__main__':
         test_results = [item for item in stream_jsonl(CHECKPOINTS['step 3'])]
 
     # Step 4: go over uni-agreement and request LLM for refinement
-    feedbacks = uni_agreement_afb(test_results, 3)  # find top k solution
+    feedbacks = uni_agreement_afb(test_results, TOP_K)  # find top k solution
     output = [history[idx] for idx in feedbacks['indices']]
     res = [res[idx] for idx in feedbacks['indices']]
     construct_refinement_prompt(output, res, feedbacks['wrong_tests'])
