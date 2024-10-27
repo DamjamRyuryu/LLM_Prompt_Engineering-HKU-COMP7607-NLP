@@ -11,7 +11,7 @@ import numpy as np
 
 
 URL = "https://api.sambanova.ai/v1"
-API_KEY = "e439dfc0-6235-400f-83d7-9847afba0b57"
+API_KEY = ""  # TODO:provide your API key, you sign up free account from sambanova
 MODEL = "Meta-Llama-3.1-8B-Instruct"
 HUMAN_EVAL = "pre_generated_data/HumanEval.jsonl"
 class LlamaModel:
