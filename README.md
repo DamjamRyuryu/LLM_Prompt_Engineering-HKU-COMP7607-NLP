@@ -2,7 +2,7 @@ The pipeline of this project is summarized as follows:
 
 <font size =4>1. Result generation (Not applicable)</font>
 
-Run on of the pipeline (baseline.py / self_evolve.py / codeT.py / combined.py)
+Run one of the methods (baseline.py / self_evolve.py / codeT.py / combined.py)
 
 Then you get the output of the method, which has already been included in the .zip file
 
