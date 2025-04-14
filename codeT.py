@@ -185,6 +185,7 @@ def uni_agreement(_results: list[dict], k: int=3) -> list[int]:
     return sorted(_indices)
 
 if __name__ == '__main__':
+    start_time = time.perf_counter()
     service = LlamaModel(URL, API_KEY, 0.8, 1,0.8)
     inputs = get_input_list_ct(HUMAN_EVAL)
     prompts = get_prompt_list_ct(inputs)
@@ -219,11 +220,12 @@ if __name__ == '__main__':
         slow_print('check correctness with the testcases...')
         sample_list = match_solution_testcases(history, solutions, testcase_list)
         if not os.path.exists('ckpt_codeT.jsonl'):
-            test_results = check_testcase(sample_list, inputs, verify=True)
+            test_results = check_testcase(sample_list, inputs, verify=True, n_workers=16)
             write_jsonl('ckpt_codeT.jsonl', test_results)
         else:
             test_results = [item for item in stream_jsonl('ckpt_codeT.jsonl')]
         better_indices = uni_agreement(test_results, 3)  # find top k solution
         output = [history[idx] for idx in better_indices]
         write_jsonl(OUTPUTFILE, output)
-    print('DONE')
+    end_time = time.perf_counter()
+    print(f'DONE,wall_clock time:{end_time-start_time}')

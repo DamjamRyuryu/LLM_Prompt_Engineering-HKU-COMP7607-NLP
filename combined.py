@@ -105,6 +105,7 @@ def construct_refinement_prompt(_output: list[dict], _completions: list[str], wr
 
 
 if __name__ == '__main__':
+    start_time = time.perf_counter()
     service = LlamaModel(URL, API_KEY, 0.8, 1, 0.8)
     inputs = get_input_list(HUMAN_EVAL)
     prompts = get_prompt_list_init(inputs)
@@ -157,4 +158,5 @@ if __name__ == '__main__':
     concatenate_str(sub_list, res, 'output', processing=True)
     concatenate_dict(output, sub_list, ['output'], ['output'], has_indices=True)
     write_jsonl(OUTPUTFILE, output)
-    print('DONE')
+    end_time = time.perf_counter()
+    print(f'DONE,wall_clock time:{end_time-start_time}')

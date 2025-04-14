@@ -87,6 +87,7 @@ def next_step_prompts(in_dict_list: list[dict], response: list[str | dict], step
     return step + 1
 
 if __name__ == '__main__':
+    start_time = time.perf_counter()
     service = LlamaModel(URL, API_KEY, 0.8, 1,0.8)
     inputs = get_input_list_se(HUMAN_EVAL)
     prompts = get_prompt_list_init(inputs)
@@ -112,4 +113,5 @@ if __name__ == '__main__':
     concatenate_str(sub_list, res, 'output', processing=True)
     concatenate_dict(history, sub_list, ['output'], ['output'], has_indices=True)
     write_jsonl(OUTPUTFILE, history)
-    print('DONE')
+    end_time = time.perf_counter()
+    print(f'DONE,wall_clock time:{end_time-start_time}')

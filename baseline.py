@@ -8,7 +8,7 @@ import os
 
 TEMPERATURE = 0.8
 TOP_P = 0.8
-OUTPUTFILE = f"zeroshot_baseline_08&08_2.jsonl"
+OUTPUTFILE = f"zeroshot_baseline.jsonl"
 ATTEMPTS = 5
 
 def write_jsonl(filename: str, data: Iterable[Dict], append: bool = False):
@@ -71,6 +71,7 @@ def get_prompt_list(input_list: list[dict[str, Any]]):
     return prompt_lists
 
 if __name__ == '__main__':
+    start_time = time.perf_counter()
     service = LlamaModel(URL,API_KEY, TEMPERATURE, ATTEMPTS,TOP_P)
     inputs = get_input_list(HUMAN_EVAL)
     prompts = get_prompt_list(inputs)
@@ -91,4 +92,5 @@ if __name__ == '__main__':
             single_problem.append(single_dict)
         dicts.extend(single_problem)
     write_jsonl(OUTPUTFILE, dicts)
-    print('DONE')
+    end_time = time.perf_counter()
+    print(f'DONE,wall_clock time:{end_time-start_time}')
